@@ -1,0 +1,54 @@
+What do we need in the database?
+
+User = {
+    username,
+    password,
+    contributor,
+    trusted
+}
+User endpoints:
+Create User
+Get User (auth)
+
+Question = {
+    question,
+    answers
+}
+Question endpoints:
+Get questions : sort by answered
+
+Answer = {
+    text,
+    author,
+    rating
+}
+Answer endpoints:
+Get answers (auth) : sort by rating
+Post answer (auth)
+
+USE MIDDLEWARE AUTH FOR PRIVELEGES
+
+General Flow:
+    1. User creates an account
+        POST /user
+    2. User answers a question
+        PATCH /questions : Changes answer to question
+            . This shouldn't immediately change the answer, but add to possible answers
+    3. User validates 3 answers
+        PATCH /questions : Changes answer rating
+        PATCH /user : Changes user rating
+    4. User waits for validation (what's the threshold)
+        PATCH /user : Changes user trusted cert
+    5. Once validated, user has access to all answers.
+        User is now sent answers to all questions, not just questions 
+    6. User can continue to rate answers and answer questions for extra points
+    *****7. Leaderboard for scores
+
+
+Scalability:
+    . Can have different reviews on there
+    . Can post pictures for answers
+
+. How do we keep track of whether or not the user voted on a sumbission yet?
+
+Give people invite links to allow them to add answers/vote
